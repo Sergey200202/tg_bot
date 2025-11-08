@@ -1,7 +1,7 @@
 import os
 import requests
 import logging
-from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton, InputMediaPhoto
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters, CallbackQueryHandler
 from dotenv import load_dotenv
 from datetime import datetime
@@ -398,61 +398,101 @@ async def show_weather(query):
     await query.edit_message_text(response_text, parse_mode='Markdown')
 
 async def show_attractions(query):
-    """Показать достопримечательности"""
+    """Показать достопримечательности в виде альбома с локальными фото"""
     attractions = [
         {
             'name': 'Памятник Ленину (Голова Ленина)',
             'description': 'Самая большая голова Ленина в мире - визитная карточка города',
             'address': 'пл. Советов',
             'emoji': '🗿',
-            '2gis_url': 'https://go.2gis.com/WedTM'
+            '2gis_url': 'https://go.2gis.com/WedTM',
+            'photo_file': 'lenin_head.jpg'
         },
         {
             'name': 'Этнографический музей народов Забайкалья',
             'description': 'Музей под открытым небом с традиционными бурятскими жилищами',
             'address': 'пос. Верхняя Берёзовка, 17Б',
             'emoji': '🏕️',
-            '2gis_url': 'https://go.2gis.com/sHGKa'
+            '2gis_url': 'https://go.2gis.com/sHGKa',
+            'photo_file': 'ethno_museum.jpg'
         },
         {
             'name': 'Иволгинский дацан',
             'description': 'Центр буддизма в России, резиденция Пандито Хамбо-ламы',
             'address': 'с. Верхняя Иволга (40 км от города)',
             'emoji': '🕌',
-            '2gis_url': 'https://go.2gis.com/quIAY'
+            '2gis_url': 'https://go.2gis.com/quIAY',
+            'photo_file': 'datsan.jpg'
         },
         {
             'name': 'Театр оперы и балета',
             'description': 'Красивейшее здание в национальном стиле',
             'address': 'ул. Ленина, 51',
             'emoji': '🎭',
-            '2gis_url': 'https://go.2gis.com/fqOTE'
+            '2gis_url': 'https://go.2gis.com/fqOTE',
+            'photo_file': 'opera_theater.jpg'
         },
         {
             'name': 'Площадь Революции',
             'description': 'Исторический центр города с фонтанами и сквером',
             'address': 'пл. Революции',
             'emoji': '🏛️',
-            '2gis_url': 'https://go.2gis.com/pWgJs'
+            '2gis_url': 'https://go.2gis.com/pWgJs',
+            'photo_file': 'revolution_square.jpg'
         },
         {
             'name': 'Свято-Одигитриевский собор',
             'description': 'Первый каменный храм в Забайкалье',
             'address': 'ул. Ленина, 2',
             'emoji': '⛪',
-            '2gis_url': 'https://go.2gis.com/6mGEz'
+            '2gis_url': 'https://go.2gis.com/6mGEz',
+            'photo_file': 'cathedral.jpg'
         }
     ]
     
-    response_text = "🏛️ *Главные достопримечательности Улан-Удэ:*\n\n"
+    # Создаем медиа-группу для альбома
+    media_group = []
+    
+    # Формируем общую подпись
+    caption = "🏛️ *Главные достопримечательности Улан-Удэ:*\n\n"
     
     for i, attr in enumerate(attractions, 1):
-        response_text += f"{i}. {attr['emoji']} *{attr['name']}*\n"
-        response_text += f"   📍 {attr['address']}\n"
-        response_text += f"   ℹ️ {attr['description']}\n"
-        response_text += f"   🗺️ [Открыть в 2ГИС]({attr['2gis_url']})\n\n"
+        caption += f"{i}. {attr['emoji']} *{attr['name']}*\n"
+        caption += f"   📍 {attr['address']}\n"
+        caption += f"   ℹ️ {attr['description']}\n"
+        caption += f"   🗺️ [Открыть в 2ГИС]({attr['2gis_url']})\n\n"
     
-    await query.edit_message_text(response_text, parse_mode='Markdown', disable_web_page_preview=True)
+    # Добавляем фотографии в медиа-группу
+    for i, attr in enumerate(attractions):
+        photo_path = os.path.join('Images', attr['photo_file'])
+        
+        # Для первого элемента добавляем подпись, для остальных - без
+        if i == 0:
+            media_group.append(
+                InputMediaPhoto(
+                    media=open(photo_path, 'rb'),
+                    caption=caption,
+                    parse_mode='Markdown'
+                )
+            )
+        else:
+            media_group.append(
+                InputMediaPhoto(
+                    media=open(photo_path, 'rb')
+                )
+            )
+    
+    try:
+        # Удаляем предыдущее сообщение с кнопками
+        await query.message.delete()
+        
+        # Отправляем альбом
+        await query.message.reply_media_group(media=media_group)
+        
+    except Exception as e:
+        logger.error(f"Error sending photo album: {e}")
+        # Если не удалось отправить альбом, отправляем текстовую версию
+        await query.message.reply_text(caption, parse_mode='Markdown', disable_web_page_preview=True)
 
 async def show_restaurants(query):
     """Показать рестораны"""
