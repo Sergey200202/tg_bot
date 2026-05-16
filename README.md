@@ -10,5 +10,5 @@ Telegram-бот для поиска достопримечательностей
 - `python-telegram-bot` v20 (async)
 - SQLite (данные)
 
-📄 Лицензия
+## 📄 Лицензия
 MIT
