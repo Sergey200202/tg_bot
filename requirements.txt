@@ -1,0 +1,5 @@
+requests
+telegram
+telegram.ext
+dotenv
+functools
