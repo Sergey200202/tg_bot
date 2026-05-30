@@ -398,7 +398,9 @@ async def show_weather(query):
     await query.edit_message_text(response_text, parse_mode='Markdown')
 
 async def show_attractions(query):
-    """Показать достопримечательности в виде альбома с локальными фото"""
+    """Показать достопримечательности в виде альбома с фото по URL"""
+    
+    # Описание достопримечательностей
     attractions = [
         {
             'name': 'Памятник Ленину (Голова Ленина)',
@@ -406,7 +408,7 @@ async def show_attractions(query):
             'address': 'пл. Советов',
             'emoji': '🗿',
             '2gis_url': 'https://go.2gis.com/WedTM',
-            'photo_file': 'lenin_head.jpg'
+            'photo_url': 'https://i.imgur.com/WhLNp9g.jpeg'  
         },
         {
             'name': 'Этнографический музей народов Забайкалья',
@@ -414,7 +416,7 @@ async def show_attractions(query):
             'address': 'пос. Верхняя Берёзовка, 17Б',
             'emoji': '🏕️',
             '2gis_url': 'https://go.2gis.com/sHGKa',
-            'photo_file': 'ethno_museum.jpg'
+            'photo_url': 'https://i.imgur.com/TOId89X.jpeg'  
         },
         {
             'name': 'Иволгинский дацан',
@@ -422,7 +424,7 @@ async def show_attractions(query):
             'address': 'с. Верхняя Иволга (40 км от города)',
             'emoji': '🕌',
             '2gis_url': 'https://go.2gis.com/quIAY',
-            'photo_file': 'datsan.jpg'
+            'photo_url': 'https://i.imgur.com/zN9mmnr.jpeg'  
         },
         {
             'name': 'Театр оперы и балета',
@@ -430,7 +432,7 @@ async def show_attractions(query):
             'address': 'ул. Ленина, 51',
             'emoji': '🎭',
             '2gis_url': 'https://go.2gis.com/fqOTE',
-            'photo_file': 'opera_theater.jpg'
+            'photo_url': 'https://i.imgur.com/ggHrtIn.jpeg'  
         },
         {
             'name': 'Площадь Революции',
@@ -438,7 +440,7 @@ async def show_attractions(query):
             'address': 'пл. Революции',
             'emoji': '🏛️',
             '2gis_url': 'https://go.2gis.com/pWgJs',
-            'photo_file': 'revolution_square.jpg'
+            'photo_url': 'https://i.imgur.com/8vPMHBy.jpeg' 
         },
         {
             'name': 'Свято-Одигитриевский собор',
@@ -446,12 +448,9 @@ async def show_attractions(query):
             'address': 'ул. Ленина, 2',
             'emoji': '⛪',
             '2gis_url': 'https://go.2gis.com/6mGEz',
-            'photo_file': 'cathedral.jpg'
+            'photo_url': 'https://i.imgur.com/o03AOev.jpeg'  
         }
     ]
-    
-    # Создаем медиа-группу для альбома
-    media_group = []
     
     # Формируем общую подпись
     caption = "🏛️ *Главные достопримечательности Улан-Удэ:*\n\n"
@@ -462,15 +461,15 @@ async def show_attractions(query):
         caption += f"   ℹ️ {attr['description']}\n"
         caption += f"   🗺️ [Открыть в 2ГИС]({attr['2gis_url']})\n\n"
     
-    # Добавляем фотографии в медиа-группу
+    # Создаем медиа-группу для альбома
+    media_group = []
+    
+    # Для первого фото добавляем подпись, для остальных - только фото
     for i, attr in enumerate(attractions):
-        photo_path = os.path.join('Images', attr['photo_file'])
-        
-        # Для первого элемента добавляем подпись, для остальных - без
         if i == 0:
             media_group.append(
                 InputMediaPhoto(
-                    media=open(photo_path, 'rb'),
+                    media=attr['photo_url'],
                     caption=caption,
                     parse_mode='Markdown'
                 )
@@ -478,7 +477,7 @@ async def show_attractions(query):
         else:
             media_group.append(
                 InputMediaPhoto(
-                    media=open(photo_path, 'rb')
+                    media=attr['photo_url']
                 )
             )
     
