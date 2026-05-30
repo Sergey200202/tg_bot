@@ -408,7 +408,7 @@ async def show_attractions(query):
             'address': 'пл. Советов',
             'emoji': '🗿',
             '2gis_url': 'https://go.2gis.com/WedTM',
-            'photo_url': 'https://i.imgur.com/WhLNp9g.jpeg'  
+            'photo_url': 'https://github.com/Sergey200202/tg_bot/blob/main/Images/lenin_head.JPG?raw=true'  
         },
         {
             'name': 'Этнографический музей народов Забайкалья',
@@ -416,7 +416,7 @@ async def show_attractions(query):
             'address': 'пос. Верхняя Берёзовка, 17Б',
             'emoji': '🏕️',
             '2gis_url': 'https://go.2gis.com/sHGKa',
-            'photo_url': 'https://i.imgur.com/TOId89X.jpeg'  
+            'photo_url': 'https://github.com/Sergey200202/tg_bot/blob/main/Images/ethno_museum.JPG?raw=true'  
         },
         {
             'name': 'Иволгинский дацан',
@@ -424,7 +424,7 @@ async def show_attractions(query):
             'address': 'с. Верхняя Иволга (40 км от города)',
             'emoji': '🕌',
             '2gis_url': 'https://go.2gis.com/quIAY',
-            'photo_url': 'https://i.imgur.com/zN9mmnr.jpeg'  
+            'photo_url': 'https://github.com/Sergey200202/tg_bot/blob/main/Images/datsan.JPG?raw=true'  
         },
         {
             'name': 'Театр оперы и балета',
@@ -432,7 +432,7 @@ async def show_attractions(query):
             'address': 'ул. Ленина, 51',
             'emoji': '🎭',
             '2gis_url': 'https://go.2gis.com/fqOTE',
-            'photo_url': 'https://i.imgur.com/ggHrtIn.jpeg'  
+            'photo_url': 'https://github.com/Sergey200202/tg_bot/blob/main/Images/opera_theater.JPG?raw=true'  
         },
         {
             'name': 'Площадь Революции',
@@ -440,7 +440,7 @@ async def show_attractions(query):
             'address': 'пл. Революции',
             'emoji': '🏛️',
             '2gis_url': 'https://go.2gis.com/pWgJs',
-            'photo_url': 'https://i.imgur.com/8vPMHBy.jpeg' 
+            'photo_url': 'https://github.com/Sergey200202/tg_bot/blob/main/Images/revolution_square.JPG?raw=true' 
         },
         {
             'name': 'Свято-Одигитриевский собор',
@@ -448,7 +448,7 @@ async def show_attractions(query):
             'address': 'ул. Ленина, 2',
             'emoji': '⛪',
             '2gis_url': 'https://go.2gis.com/6mGEz',
-            'photo_url': 'https://i.imgur.com/o03AOev.jpeg'  
+            'photo_url': 'https://github.com/Sergey200202/tg_bot/blob/main/Images/cathedral.JPG?raw=true'  
         }
     ]
     
