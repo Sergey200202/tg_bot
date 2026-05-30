@@ -1,5 +1,4 @@
 requests
-telegram
-telegram.ext
+python-telegram-bot
 dotenv
 functools
