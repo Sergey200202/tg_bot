@@ -1,4 +1,3 @@
 requests
 python-telegram-bot
-dotenv
-functools
+python-dotenv
